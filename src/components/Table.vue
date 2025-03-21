@@ -7,12 +7,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(row, i) in tableData.data" :key="i">
+            <tr v-for="row in tableData.data" :key="row.id">
                 <td v-for="(cell, index) in Object.values(row)" :key="index">{{ cell }}</td>
                 <td>
                     <div style="display: flex; justify-content: space-between;width: 150px;">
-                        <button @click="handleEdit(i)">Modifier</button>
-                        <button @click="handleDelete(i)">Supprimer</button>
+                        <button @click="handleEdit(row.id)">Modifier</button>
+                        <button @click="handleDelete(row.id)">Supprimer</button>
 
                     </div>
                 </td>

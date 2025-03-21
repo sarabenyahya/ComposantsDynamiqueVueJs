@@ -27,6 +27,10 @@ export default {
     props: {
         fields: Array,
         buttonText: String,
+        initialValues: {
+            type: Object,
+            default: () => ({}),
+        }
     },
     data() {
         return {
@@ -41,7 +45,11 @@ export default {
                 this.formData[field.name] = '';
             }
         });
-        console.log(this.formData);
+        if (this.initialValues && Object.keys(this.initialValues).length > 0) {
+            console.warn(this.initialValues);
+            this.formData = { ...this.formData, ...this.initialValues };
+
+        }
     },
 
     methods: {

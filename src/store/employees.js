@@ -3,30 +3,42 @@ import { defineStore } from 'pinia';
 export const useEmployeeStore=defineStore('employeeStore',{
     state:()=>({
         employees:[
-            {nom:'maram',mail:'maram@test',age:20,password:'test',genre:'femme',interets:['musique']},
-            {nom:'assia',mail:'assia@test',age:25,password:'test',genre:'femme',interets:['sport']},
-            {nom:'yassine',mail:'yassine@test',age:30,password:'test',genre:'homme',interets:['sport']}, 
+            {id:100,nom:'maram',mail:'maram@test',age:20,password:'test',genre:'femme',interets:['musique']},
+            {id:102,nom:'assia',mail:'assia@test',age:25,password:'test',genre:'femme',interets:['sport']},
+            {id:103,nom:'yassine',mail:'yassine@test',age:30,password:'test',genre:'homme',interets:['sport']}, 
 
         ],
-        departements:[
-            {id:1,name:'informatique'},
-            {id:2,name:'comptabilite'}, 
-            {id:3,name:'marketing'},
-        ]
+        nextID:104,
     }),
+    getters:{
+        getEmployeeById(state){
+            return (id)=>{
+                return state.employees.find((employee)=>employee.id===Number(id));
+            }
+        }
+    },
     actions:{
         addEmployee(employee){
-            this.employees.push(employee)
+            const newEmployee={
+                ...employee,
+                id:this.nextID,
+            };
+            this.employees.push(newEmployee);
+            this.nextID++;
         },
-        editEmployee(index, updatedEmployee) {
-            this.employees[index] = updatedEmployee;
+        editEmployee(id, updatedEmployee) {
+            const index=this.employees.findIndex(
+                (employee)=>employee.id==Number(id)
+            );
+            if(index!==-1){
+                this.employees[index]={...this.employees[index],...updatedEmployee};
+            }
+
         },
         deleteEmployee(index) {
             this.employees.splice(index, 1);
         },
-        updatedEmployee(index,newData){
-            this.employees[index]={...this.employees[index],...newData}
-        }
+        
         
 
     },

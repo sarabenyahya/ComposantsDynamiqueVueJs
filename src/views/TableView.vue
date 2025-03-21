@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>liste</h1>
+        <h1>Liste des employés</h1>
         <Table :tableData="tableData1" @onDelete="handleDeleteEmployee" @onEdit="handleEdit" />
     </div>
 </template>
@@ -20,10 +20,10 @@ export default {
 
         tableData1() {
             return {
-                headers: ['nom', 'gmail', 'age', 'genre', 'centre d interet'],
+                headers: ['id', 'nom', 'gmail', 'age', 'genre', 'centre d interet'],
                 data: this.employees
-                    .filter(emp => emp !== undefined && emp !== null)
                     .map(emp => ({
+                        id: emp.id,
                         nom: emp.nom,
                         mail: emp.mail,
                         age: emp.age,
@@ -41,13 +41,13 @@ export default {
     methods: {
         ...mapActions(useEmployeeStore, ['addEmployee', 'deleteEmployee', 'editEmployee']),
 
-        handleEdit(index) {
-            this.$router.push(`/edit/${index}`)
+        handleEdit(id) {
+            this.$router.push({ name: 'editForm', params: { id } });
         },
-        handleDeleteEmployee(index) {
+        handleDeleteEmployee(id) {
 
-            alert(`Suppression de l'employé a l'index ${index}`);
-            this.deleteEmployee(index);
+            alert(`Suppression de l'employé a l'index ${id}`);
+            this.deleteEmployee(id);
 
         },
 

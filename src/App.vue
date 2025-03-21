@@ -10,7 +10,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
   <nav>
     <RouterLink to="/">Acceuil</RouterLink>
-    <RouterLink to="/add">Formulaire d'ajout</RouterLink>
+    <RouterLink to="/add">Ajouter un employé</RouterLink>
   </nav>
 
 

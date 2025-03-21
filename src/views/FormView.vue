@@ -1,7 +1,9 @@
 <template>
     <div>
-        <h2>ajouter un employé</h2>
-        <Form :fields="fieldList" buttonText="Ajouter" @onSubmit="handleSubmit" />
+        <h2>{{ isEditMode ? 'Modifier' : 'Ajouter' }} un employé</h2>
+
+        <Form :fields="fieldList" :buttonText="isEditMode ? 'Modifier' : 'Ajouter'" :initialValues="employeeData"
+            @onSubmit="handleSubmit" />
 
     </div>
 
@@ -10,10 +12,17 @@
 <script>
 import { useEmployeeStore } from '@/store/employees';
 import Form from '@/components/Form.vue';
+import { mapActions, mapState } from 'pinia';
 
 export default {
     components: {
         Form,
+    },
+    props: {
+        id: {
+            type: [String, Number],
+            default: null,
+        }
     },
     data() {
         return {
@@ -61,20 +70,41 @@ export default {
                     ],
                 },
             ],
+            employeeData: {},
 
+        };
+
+    },
+    computed: {
+        ...mapState(useEmployeeStore, ['employees', 'getEmployeeById']),
+        isEditMode() {
+            return !!this.id;
         }
+    },
+    created() {
+        if (this.isEditMode) {
+            const employee = this.getEmployeeById(this.id);
+            if (employee) {
+                this.employeeData = { ...employee };
 
+            }
+            else {
+                alert('Employé introuvable');
+                this.$router.push('/');
+            }
+        }
     },
     methods: {
+        ...mapActions(useEmployeeStore, ['addEmployee', 'editEmployee']),
         handleSubmit(data) {
-            const employeeStore = useEmployeeStore();
-
-            console.log(data)
-            employeeStore.addEmployee(data);
-            this.$router.push('/');
+            if (this.isEditMode) {
+                this.editEmployee(this.id, data);
+            } else {
+                this.addEmployee(data);
+            }
+            this.$router.push({ name: 'tableau' });
         },
-    },
 
-
+    }
 };
 </script>

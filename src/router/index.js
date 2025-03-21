@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import TableView from '../views/TableView.vue';
 import FormView from '../views/FormView.vue';
-import EditFormView from '@/views/EditFormView.vue';
 
 
 const router = createRouter({
@@ -20,9 +19,10 @@ const router = createRouter({
       
     },
     {
-      path: '/edit/:index',
-      name: 'edit',
-      component: EditFormView,
+      path: '/edit/:id',
+      name: 'editForm',
+      component: FormView,
+      props: true
       
     },
     
