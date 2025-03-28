@@ -35,7 +35,10 @@ export const useEmployeeStore=defineStore('employeeStore',{
             }
 
         },
-        deleteEmployee(index) {
+        deleteEmployee(id) {
+            const index=this.employees.findIndex(
+                (employee)=>employee.id==Number(id)
+            )
             this.employees.splice(index, 1);
         },
         

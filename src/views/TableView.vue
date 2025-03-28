@@ -15,26 +15,30 @@ export default {
     components: {
         Table,
     },
+
     computed: {
         ...mapState(useEmployeeStore, ['employees']),
 
         tableData1() {
-            return {
-                headers: ['id', 'nom', 'gmail', 'age', 'genre', 'centre d interet'],
-                data: this.employees
-                    .map(emp => ({
-                        id: emp.id,
-                        nom: emp.nom,
-                        mail: emp.mail,
-                        age: emp.age,
-                        //password: emp.password,
-                        genre: emp.genre,
-                        interets: emp.interets ? emp.interets.join(', ') : 'Aucun',
-                    }))
-            };
+            if (!this.employees || this.employees.length === 0) {
+                return { headers: [], data: [] };
+            }
 
+            const headers = Object.keys(this.employees[0]);
 
-        },
+            const data = this.employees.map(emp => {
+                const row = {};
+                headers.forEach(key => {
+                    row[key] = Array.isArray(emp[key]) ?
+                        emp[key].join(', ') :
+                        emp[key] ?? '---';
+                });
+                return row;
+            });
+
+            return { headers, data };
+        }
+
 
 
     },
