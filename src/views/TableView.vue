@@ -24,14 +24,15 @@ export default {
                 return { headers: [], data: [] };
             }
 
-            const headers = Object.keys(this.employees[0]);
+            const headers = [
+                { label: "Nom", value: "nom" },
+                { label: "E - mail", value: "mail" }
+            ];
 
             const data = this.employees.map(emp => {
                 const row = {};
-                headers.forEach(key => {
-                    row[key] = Array.isArray(emp[key]) ?
-                        emp[key].join(', ') :
-                        emp[key] ?? '---';
+                headers.forEach(header => {
+                    row[header.value] = emp.hasOwnProperty(header.value) ? emp[header.value] : '---';
                 });
                 return row;
             });

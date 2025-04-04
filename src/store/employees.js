@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useEmployeeStore=defineStore('employeeStore',{
     state:()=>({
         employees:[
-            {id:100,nom:'maram',mail:'maram@test',age:20,password:'test',genre:'femme',interets:['musique']},
+            {id:100,nom:'maram',mail:'maram@test',age:20,password:'test',genre:'femme',interets:['musique','sport']},
             {id:102,nom:'assia',mail:'assia@test',age:25,password:'test',genre:'femme',interets:['sport']},
             {id:103,nom:'yassine',mail:'yassine@test',age:30,password:'test',genre:'homme',interets:['sport']}, 
 

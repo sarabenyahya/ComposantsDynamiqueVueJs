@@ -2,7 +2,7 @@
     <table>
         <thead>
             <tr>
-                <th v-for="(header, index) in tableData.headers" :key="index">{{ header }}</th>
+                <th v-for="(header, index) in tableData.headers" :key="index">{{ header.label }}</th>
                 <th>Action</th>
             </tr>
         </thead>
